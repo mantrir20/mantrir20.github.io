@@ -75,7 +75,7 @@ var goalAmountLbl = {
         document.getElementsByTagName('body')[0].appendChild(this.lbl);
         this.lbl.style.position =  "absolute";
         this.lbl.style.left = 530 + 'px';
-        this.lbl.style.top = 225 + 'px';
+        this.lbl.style.top = 240 + 'px';
         this.lbl.style.fontSize = 25 + 'px';
         myGoalAmount = generateRandomAmount();
         this.lbl.innerHTML = myGoalAmount;
@@ -89,7 +89,7 @@ var resultLbl = {
         document.getElementsByTagName('body')[0].appendChild(this.lbl);
         this.lbl.style.position =  "absolute";
         this.lbl.style.left = 165 + 'px';
-        this.lbl.style.top = 650 + 'px';
+        this.lbl.style.top = 740 + 'px';
         this.lbl.style.fontSize = 26 + 'px';
         this.lbl.innerHTML = myResult
     },
@@ -107,7 +107,7 @@ var scoreLbl = {
         document.getElementsByTagName('body')[0].appendChild(this.lbl);
         this.lbl.style.position =  "absolute";
         this.lbl.style.left = 500 + 'px';
-        this.lbl.style.top = 280 + 'px';
+        this.lbl.style.top = 300 + 'px';
         this.lbl.style.fontSize = 24 + 'px';
         this.lbl.innerHTML = "Score: 0";
     },
@@ -183,13 +183,13 @@ function submit(){
 function generateRandomAmount(){
     
     if (difficulty == "easy"){
-        return Math.floor(Math.random()*1000+1)
+        return Math.floor(Math.random()*100+1)
     }
     else if (difficulty == "medium"){
-        return Math.floor(Math.random()*2000+1)
+        return Math.floor(Math.random()*1000+1)
     }
     else{
-        return Math.round((Math.random()*1000+1) * 100)/100;
+        return Math.round((Math.random()*10000+1));
     }
 }
 
