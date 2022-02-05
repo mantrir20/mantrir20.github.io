@@ -1,4 +1,6 @@
 import pandas as pd
+from google_drive_downloader import GoogleDriveDownloader as gdd
+
 
 html = """<HTML>
 <head>
@@ -68,7 +70,7 @@ td {{
 </body>
 </HTML>"""
 
-
+gdd.download_file_from_google_drive(file_id='14QE434Iv-B_HQXRcWcN87HbuJPOTbVEj', dest_path='./module_details.csv')
 
 df = pd.read_csv("module_details.csv", header=None)
 df = df.sort_values(by=[1,0])
