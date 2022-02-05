@@ -63,7 +63,8 @@ td {{
             <th style="background-color:#808000" align="center">Name of module</th>
             <th style="background-color:#808000" align="center">Level</th>
             <th style="background-color:#808000" align="center">Authors</th>
-            <th style="background-color:#808000" align="center">Link</th>
+            <th style="background-color:#808000" align="center">Google Link</th>
+            <th style="background-color:#808000" align="center">PDF</th>
         </tr>
         {0}
     </table>
@@ -87,6 +88,8 @@ for index, row in df.iterrows():
     list.append(str(row[2]))
     a = '<a href=' + row[3] + '>Link</a>'
     list.append(a)
+    b = '<a href=' + row[4] + '>Link</a>'
+    list.append(b)
     items.append(list)
     counter += 1
 
