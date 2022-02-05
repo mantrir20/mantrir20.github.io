@@ -1,16 +1,16 @@
-<HTML>
+html = """<HTML>
 <head>
 <style>
 
-.header {
+.header {{
   padding: 5px;
   text-align: center;
   background: #1abc9c;
   color: white;
   font-size: 15px;
-}
+}}
 
-.button {
+.button {{
   border: none;
   color: black;
   padding: 15px 32px;
@@ -20,26 +20,26 @@
   font-size: 16px;
   margin: 4px 2px;
   cursor: pointer;
-}
+}}
 
-table {
+table {{
   font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 100%;
-}
+}}
 
-th {
+th {{
   border: 1px solid #dddddd;
   font-size: 20px;
   text-align: center;
   padding: 8px;
-}
+}}
 
-td {
+td {{
   border: 1px solid #dddddd;
   text-align: center;
   padding: 8px;
-}
+}}
 
 
 
@@ -61,7 +61,22 @@ td {
             <th style="background-color:#808000" align="center">Authors</th>
             <th style="background-color:#808000" align="center">Link</th>
         </tr>
-        <tr><td>1</td><td>Addition and Subtraction</td><td>1</td><td>Raunak, Mohit</td><td><a href=https://docs.google.com/document/d/1OOiFWetpGMXIExZqT6TCajRONpbPpZZ2khyjA8PXIXc/edit?usp=sharing>Link</a></td></tr><tr><td>2</td><td>Addition and Subtraction</td><td>1</td><td>Raunak, Mohit</td><td><a href=https://docs.google.com/document/d/1OOiFWetpGMXIExZqT6TCajRONpbPpZZ2khyjA8PXIXc/edit?usp=sharing>Link</a></td></tr><tr><td>3</td><td>Addition and Subtraction</td><td>1</td><td>Raunak, Mohit</td><td><a href=https://docs.google.com/document/d/1OOiFWetpGMXIExZqT6TCajRONpbPpZZ2khyjA8PXIXc/edit?usp=sharing>Link</a></td></tr>
+        {0}
     </table>
 </body>
-</HTML>
+</HTML>"""
+
+items = [['1', 'Addition and Subtraction', '1', 'Raunak, Mohit', '<a href=https://docs.google.com/document/d/1OOiFWetpGMXIExZqT6TCajRONpbPpZZ2khyjA8PXIXc/edit?usp=sharing>Link</a>'], 
+    ['2', 'Addition and Subtraction', '1', 'Raunak, Mohit', '<a href=https://docs.google.com/document/d/1OOiFWetpGMXIExZqT6TCajRONpbPpZZ2khyjA8PXIXc/edit?usp=sharing>Link</a>'],
+    ['3', 'Addition and Subtraction', '1', 'Raunak, Mohit', '<a href=https://docs.google.com/document/d/1OOiFWetpGMXIExZqT6TCajRONpbPpZZ2khyjA8PXIXc/edit?usp=sharing>Link</a>']
+    ]
+th = "<th>{0}</th>"
+tr = "<tr>{0}</tr>"
+td = "<td>{0}</td>"
+subitems = [tr.format(''.join([td.format(a) for a in item])) for item in items]
+x= (html.format("".join(subitems))) # or write, whichever
+#print(x)
+
+file = open("index.html", "w+")
+file.write(x)
+file.close()

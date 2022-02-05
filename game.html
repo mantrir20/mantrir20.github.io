@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<style>
+body {
+  background-image: url('preview.jpg');
+  background-repeat: repeat;
+  font-family: "adonis-web",serif;
+  font-style: normal;
+  font-weight: 400;
+  color: darken(lightblue, 23%);
+}
+img {
+    border:solid;
+    width:400;
+    height:379;
+}
+
+map {
+    position:absolute;
+}
+
+label{
+    position: absolute;
+}
+</style>
+</head>
+<body onload="startGame()">
+    <h1 style="font-family:'Times New Roman', Times, serif;">Banker Bonker!</h1>
+    <p style="font-family:fantasy">$$ A fun currency addition game $$</p>
+    <img src='background.jpeg' usemap="#mymap" width="1200" height="679">
+    <audio id="bgmusic" src="First-Snow-Free-Download.mp3"></audio>
+    <audio id="clink" src="clink.mp3"></audio>
+    <audio id="clap" src="clap.mp3"></audio>s
+    <audio id="retry" src="fail.mp3"></audio>s
+    <audio id="tryagain" src="try-again.mp3"></audio>
+    <map name="mymap">
+        <!-- <area shape="rect" coords="34,44,270,350"  onclick="clickHundredDollars()"> -->
+        <area shape="rect" coords="20,307,76,410" onclick="clickHundredDollars()">
+        <area shape="rect" coords="87,300,146,410" onclick="clickTwentyDollars()">
+        <area shape="rect" coords="164,300,223,410" onclick="clickTenDollars()">
+        <area shape="rect" coords="240,300,300,410" onclick="clickFiveDollars()">
+        <area shape="rect" coords="315,300,376,410" onclick="clickOneDollar()">
+        <area shape="circle" coords="37,500,33" onclick="clickOneDollar()">
+        <area shape="circle" coords="130,500,35" onclick="clickQuarterDollar()">
+        <area shape="circle" coords="210,500,24" onclick="clickTenCents()">
+        <area shape="circle" coords="275,500,30" onclick="clickFiveCents()">
+        <area shape="circle" coords="340,500,26" onclick="clickOneCent()">
+        <area shape="rect" coords="375,420,470,340" onclick="clearResult()" >
+        <area shape="rect" coords="385,455,484,397" onclick="submit()">
+        <area shape="rect" coords="685,10,730,61" onclick="easy()">
+        <area shape="rect" coords="760,10,800,61" onclick="medium()">
+        <area shape="rect" coords="830,10,880,61" onclick="hard()">
+    </map>
+    <script>
+
+var goalAmountLbl;
+var resultLbl;
+var myResult = 0;
+var myGoalAmount = 0;
+var myScore = 0;
+var difficulty = "easy";
+
+function startGame() {
+    goalAmountLbl.refresh();
+    resultLbl.initialize();
+    scoreLbl.initialize();
+    playBgMusic();
+}
+    
+var goalAmountLbl = {
+    lbl : document.createElement('label'),
+    refresh : function() {
+        document.getElementsByTagName('body')[0].appendChild(this.lbl);
+        this.lbl.style.position =  "absolute";
+        this.lbl.style.left = 530 + 'px';
+        this.lbl.style.top = 240 + 'px';
+        this.lbl.style.fontSize = 25 + 'px';
+        myGoalAmount = generateRandomAmount();
+        this.lbl.innerHTML = myGoalAmount;
+    }
+}
+
+var resultLbl = {
+    lbl : document.createElement('label'),
+
+    initialize : function() {
+        document.getElementsByTagName('body')[0].appendChild(this.lbl);
+        this.lbl.style.position =  "absolute";
+        this.lbl.style.left = 165 + 'px';
+        this.lbl.style.top = 740 + 'px';
+        this.lbl.style.fontSize = 26 + 'px';
+        this.lbl.innerHTML = myResult
+    },
+
+    update : function() {
+        myResult = Math.round(myResult * 100)/100;
+        this.lbl.innerHTML = myResult;
+    }
+}
+
+var scoreLbl = {
+    lbl : document.createElement('label'),
+
+    initialize : function() {
+        document.getElementsByTagName('body')[0].appendChild(this.lbl);
+        this.lbl.style.position =  "absolute";
+        this.lbl.style.left = 500 + 'px';
+        this.lbl.style.top = 300 + 'px';
+        this.lbl.style.fontSize = 24 + 'px';
+        this.lbl.innerHTML = "Score: 0";
+    },
+
+    update : function() {
+        this.lbl.innerHTML = "Score: "+myScore;
+    }
+}
+
+function easy(){
+    difficulty="easy";
+    goalAmountLbl.refresh();
+}
+
+function medium(){
+    difficulty="medium";
+    goalAmountLbl.refresh();
+}
+
+function hard(){
+    difficulty="hard";
+    goalAmountLbl.refresh();
+}
+
+function playSelectCurrency(){
+    document.getElementById("clink").play();
+}
+
+function playBgMusic() {
+   document.getElementById("bgmusic").play();
+}
+
+function playClap() {
+    document.getElementById("clap").play();
+}
+
+function playRetry() {
+    document.getElementById("retry").play();
+}
+
+function sayTryAgain(){
+    document.getElementById("tryagain").play();
+}
+
+
+function submit(){
+    console.log("submit")
+    console.log(myResult)
+    if (myResult == myGoalAmount) {
+        playClap();
+        if (difficulty=="easy"){
+            myScore += 1;
+        }
+        else if (difficulty=="medium"){
+            myScore += 2;
+        }
+        else {
+            myScore += 4;
+        }
+        
+        scoreLbl.update();
+        goalAmountLbl.refresh();
+        clearResult();
+    }
+    else{
+        console.log("calling clear")
+        playRetry();
+        //sayTryAgain();
+        clearResult()
+    }
+}
+
+function generateRandomAmount(){
+    
+    if (difficulty == "easy"){
+        return Math.floor(Math.random()*100+1)
+    }
+    else if (difficulty == "medium"){
+        return Math.floor(Math.random()*1000+1)
+    }
+    else{
+        return Math.round((Math.random()*10000+1));
+    }
+}
+
+function clickOneDollar() {
+    playSelectCurrency()
+    myResult = myResult + 10.0 ;
+    resultLbl.update();
+}
+
+function clickFiveDollars() {
+    playSelectCurrency()
+    myResult += 20.0 ;
+    resultLbl.update();
+}
+
+function clickTenDollars() {
+    playSelectCurrency()
+    myResult += 50.0 ;
+    resultLbl.update();
+}
+
+function clickTwentyDollars() {
+    myResult += 100.0 ;
+    playSelectCurrency()
+    resultLbl.update();
+}
+
+function clickHundredDollars() {
+    playSelectCurrency()
+    myResult = myResult + 500.0 ;
+    console.log(myResult)
+    resultLbl.update();
+}
+
+function clickOneCent() {
+    playSelectCurrency()
+    myResult += 1.00 ;
+    myResult = Math.round(myResult * 100)/100;
+    resultLbl.update();
+}
+
+function clickFiveCents() {
+    playSelectCurrency()
+    myResult += 5.00 ;
+    resultLbl.update();
+}
+
+function clickTenCents() {
+    playSelectCurrency()
+    myResult += 10.00 ;
+    resultLbl.update();
+}
+
+function clickQuarterDollar() {
+    playSelectCurrency()
+    myResult += 0.25 ;
+    resultLbl.update();
+}
+
+function clearResult() {
+    myResult = 0 
+    console.log(myResult)
+    resultLbl.update();
+
+}
+</script>
+</body>
+</html>
