@@ -1,3 +1,5 @@
+import pandas as pd
+
 html = """<HTML>
 <head>
 <style>
@@ -66,10 +68,26 @@ td {{
 </body>
 </HTML>"""
 
-items = [['1', 'Measurement', '2', 'Aarya, Raunak', '<a href=https://docs.google.com/document/d/10UtvxtnTahkMEtaWQ_9nx8UH59OJx1tT4KxNeJv5GmY/edit#heading=h.enexohuphl1j>Link</a>'], 
-    ['2', 'Addition and Subtraction', '1', 'Raunak, Mohit', '<a href=https://docs.google.com/document/d/1OOiFWetpGMXIExZqT6TCajRONpbPpZZ2khyjA8PXIXc/edit?usp=sharing>Link</a>'],
-    ['3', 'Addition and Subtraction', '1', 'Raunak, Mohit', '<a href=https://docs.google.com/document/d/1OOiFWetpGMXIExZqT6TCajRONpbPpZZ2khyjA8PXIXc/edit?usp=sharing>Link</a>']
-    ]
+
+
+df = pd.read_csv("module_details.csv", header=None)
+df = df.sort_values(by=[1,0])
+print(df)
+items = []
+
+counter = 1
+
+for index, row in df.iterrows():
+    list = []
+    list.append(str(counter))
+    list.append(row[0])
+    list.append(str(row[1]))
+    list.append(str(row[2]))
+    a = '<a href=' + row[3] + '>Link</a>'
+    list.append(a)
+    items.append(list)
+    counter += 1
+
 th = "<th>{0}</th>"
 tr = "<tr>{0}</tr>"
 td = "<td>{0}</td>"
